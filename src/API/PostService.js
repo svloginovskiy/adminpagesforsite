@@ -6,11 +6,22 @@ export default class PostService {
                 'Content-Type': 'application/json;charset=UTF-8'
             }
         };
-        const response = await fetch('/json/posts?limit=' + limit + '&page='+ page, options);
-        if (response && response.ok) {
-            return response;
-        } else {
-            return null;
-        }
+        const response = await fetch('/json/posts?limit=' + limit + '&page=' + page, options);
+        return response;
+    }
+
+    static async deletePost(id) {
+        await fetch(`/admin/posts/${id}/delete`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    }
+
+    static async savePost(post) {
+        await fetch(`/newadmin/posts/${post.id}/edit`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams(post)
+        })
     }
 }
